@@ -2,6 +2,7 @@
 """
     A type-annotated function
 """
+
 from typing import List, Union
 
 
