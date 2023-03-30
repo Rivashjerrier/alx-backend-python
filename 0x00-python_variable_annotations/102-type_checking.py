@@ -3,7 +3,7 @@
     0x00-python_variable_annotations
 """
 
-from typing import List, Tuple
+from typing import Tuple, List
 
 
 def zoom_array(lst: Tuple, factor: int = 2) -> List:
