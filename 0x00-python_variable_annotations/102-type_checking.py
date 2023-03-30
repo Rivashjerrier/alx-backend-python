@@ -7,7 +7,7 @@ from typing import List, Tuple
 
 
 def zoom_array(lst: Tuple, factor: int = 2) -> List:
-    """ Validated and applied neccesaary changes """
+    """Validated and applied neccesaary changes"""
     zoomed_in: List = [
         item for item in lst
         for i in range(factor)
