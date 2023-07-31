@@ -2,8 +2,9 @@
 """ test_utils.py module """
 
 import unittest
-from utils import access_nested_map
+from utils import access_nested_map, get_json
 from parameterized import parameterized
+from unittest.mock import patch
 
 
 class TestAccessNestedMap(unittest.TestCase):
@@ -25,7 +26,29 @@ class TestAccessNestedMap(unittest.TestCase):
         ({"a": 1}, ("a", "b")),
     ])
     def test_access_nested_map_exception(self, nested_map, path):
-        """ Uses the assertRaises context manager to test that a KeyError is raised correctly """
+        """ Uses the assertRaises context manager to test that
+            a KeyError is raised correctly
+        """
         with self.assertRaises(KeyError) as err:
             access_nested_map(nested_map, path)
             self.assertEqual(err.exception.args[0], path[-1])
+
+
+class TestGetJson(unittest.TestCase):
+    """ TestGetJson.test_get_json method to test that utils.get_json
+        returns the expected result
+    """
+
+    @patch("utils.requests.get")
+    @parameterized.expand([
+        ("http://example.com", {"payload": True}),
+        ("http://holberton.io", {"payload": False}),
+    ])
+    def test_get_json(self, test_url, test_payload, mock_get):
+        """ Tests that the mocked get method was called exactly once  with test_url
+            as argument.
+            Test that the output of get_json is equal to test_payload.
+        """
+        mock_get.return_value = test_payload
+        res = get_json(test_url)
+        self.assertEqual(res, test_payload)
