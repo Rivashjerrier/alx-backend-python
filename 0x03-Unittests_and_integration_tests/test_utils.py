@@ -39,16 +39,18 @@ class TestGetJson(unittest.TestCase):
         returns the expected result
     """
 
-    @patch("utils.requests.get")
     @parameterized.expand([
         ("http://example.com", {"payload": True}),
         ("http://holberton.io", {"payload": False}),
     ])
+    @patch("utils.requests.get")
     def test_get_json(self, test_url, test_payload, mock_get):
         """ Tests that the mocked get method was called exactly once  with test_url
             as argument.
             Test that the output of get_json is equal to test_payload.
         """
-        mock_get.return_value.json.return_value = test_payload
-        self.assertEqual(get_json(test_url), test_payload)
-        mock_get.assert_called_once()
+        mock_response = mock_get.return_value
+        mock_response.json.return_value = test_payload
+        res = get_json(test_url)
+        mock_get.assert_called_once_with(test_url)
+        self.assertEqual(res, test_payload)
