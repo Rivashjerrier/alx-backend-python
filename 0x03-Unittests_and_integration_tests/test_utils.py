@@ -49,6 +49,6 @@ class TestGetJson(unittest.TestCase):
             as argument.
             Test that the output of get_json is equal to test_payload.
         """
-        mock_get.return_value = test_payload
-        res = get_json(test_url)
-        self.assertEqual(res, test_payload)
+        mock_get.return_value.json.return_value  = test_payload
+        self.assertEqual(get_json(test_url), test_payload)
+        mock_get.assert_called_once_with()
