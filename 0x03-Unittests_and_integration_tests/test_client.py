@@ -15,19 +15,15 @@ class TestGithubOrgClient(unittest.TestCase):
     of the test_org method
     """
     @parameterized.expand([
-        ('google', {"login": "google"}),
-        ('abc', {"login": "abc"}),
+        ("google",),
+        ("abc",),
     ])
-    @patch('client.get_json')
-    def test_org(self, org, mocked, result):
+    @patch("client.get_json")
+    def test_org(self, org, mock_function):
         """
         This method tests that GithubOrgClient.org returns the correct value
         """
-        mocked.return_value = result
+        mock_function.return_value = {"login": org}
         test_client = GithubOrgClient(org)
         test_org = test_client.org()
-        self.assertEqual(test_org, result)
-
-
-if __name__ == '__main__':
-    unittest.main()
+        self.assertEqual(test_org, {"login": org})
