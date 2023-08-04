@@ -27,3 +27,7 @@ class TestGithubOrgClient(unittest.TestCase):
         test_client = GithubOrgClient(org)
         test_org = test_client.org()
         self.assertEqual(test_org, result)
+
+
+if __name__ == '__main__':
+    unittest.main()
