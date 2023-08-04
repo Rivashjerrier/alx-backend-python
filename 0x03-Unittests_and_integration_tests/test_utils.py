@@ -2,7 +2,7 @@
 """ test_utils.py module """
 
 import unittest
-from utils import access_nested_map, get_json
+from utils import access_nested_map, get_json, memoize
 from parameterized import parameterized
 from unittest.mock import patch
 
@@ -45,8 +45,8 @@ class TestGetJson(unittest.TestCase):
     ])
     @patch("utils.requests.get")
     def test_get_json(self, test_url, test_payload, mock_get):
-        """ Tests that the mocked get method was called exactly once  with test_url
-            as argument.
+        """ Tests that the mocked get method was called exactly once
+            with test_url as argument.
             Test that the output of get_json is equal to test_payload.
         """
         mock_response = mock_get.return_value
@@ -60,8 +60,9 @@ class TestMemoize(unittest.TestCase):
     """ Test class for the memoize function """
 
     def test_memoize(self):
-        """ Test that when calling a_property twice, the correct result is returned
-            but a_method is only called once using assert_called_once
+        """ Test that when calling a_property twice, the correct result
+            is returned but a_method is only called once using
+            assert_called_once
         """
 
         class TestClass:
