@@ -7,6 +7,7 @@ import unittest
 from unittest.mock import patch
 from parameterized import parameterized
 from client import GithubOrgClient
+from fixtures import TEST_PAYLOAD
 
 
 class TestGithubOrgClient(unittest.TestCase):
@@ -27,3 +28,17 @@ class TestGithubOrgClient(unittest.TestCase):
         test_client = GithubOrgClient(org)
         test_org = test_client.org()
         self.assertEqual(test_org, {"login": org})
+
+    def test_public_repos_url(self):
+        """
+        test_public_repos_url method to unit-test
+        GithubOrgClient._public_repos_url
+        """
+        known_payload = {
+            "repos_url": "https://api.github.com/orgs/google/repos"
+        }
+        with patch.object(GithubOrgClient, 'org', return_value=known_payload):
+            test_client = GithubOrgClient("google")
+            public_repos_url = test_client._public_repos_url
+            res = "https://api.github.com/orgs/google/repos"
+            self.assertEqual(public_repos_url, res)
