@@ -16,10 +16,10 @@ class TestGithubOrgClient(unittest.TestCase):
     of the test_org method
     """
     @parameterized.expand([
-        ("google",),
-        ("abc",),
+        ('google',),
+        ('abc',),
     ])
-    @patch("client.get_json")
+    @patch('client.get_json')
     def test_org(self, org, mock_function):
         """
         This method tests that GithubOrgClient.org returns the correct value
