@@ -42,3 +42,15 @@ class TestGithubOrgClient(unittest.TestCase):
             public_repos_url = test_client._public_repos_url
             res = "https://api.github.com/orgs/google/repos"
             self.assertEqual(public_repos_url, res)
+
+    @parameterized.expand([
+        ({"license": {"key": "my_license"}}, "my_license", True),
+        ({"license": {"key": "other_license"}}, "my_license", False),
+    ])
+    def test_has_license(self, repo, license, result):
+        """
+        Test the has_license method
+        """
+        test_client = GithubOrgClient("google")
+        client_result = client.has_license(repo, license)
+        self.assertEqual(client_result, result)
